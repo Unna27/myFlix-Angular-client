@@ -11,7 +11,8 @@ const apiUrl = 'https://myflix-ur.herokuapp.com/'
   // scoping the service. root: this service will be available everywhere
   providedIn: 'root'
 })
-export class UserRegistrationService {
+
+export class FetchAPIDataService {
   // Inject the HttpClient module to the constructor params
   // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) { 
@@ -25,7 +26,6 @@ export class UserRegistrationService {
     catchError(this.handleError)
     );
   }
-
   // Making the api call for the user login endpoint
   public userLogin(userDetails: any): Observable<any> {
     console.log(userDetails);
@@ -157,7 +157,7 @@ export class UserRegistrationService {
         `Error body is: ${error.error}`);
     }
     return throwError(
-    'Something bad happened; please try again later.');
+    'Something bad happened in userRegistration service; please try again later.');
   }
-
 }
+

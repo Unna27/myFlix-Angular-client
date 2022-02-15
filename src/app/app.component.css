@@ -1,0 +1,21 @@
+.main-page {
+  background-color:  #F6F3EE;
+  margin: auto;
+  width: 60%;
+  border: 5px solid rgb(118, 148, 202);
+  padding: 10px;
+  text-align: center;
+}
+
+h1{
+  color:blue  ;
+  font-weight: bold;
+  text-align: center;
+}
+
+button {
+  margin-right: 10px;
+  color: blue;
+  padding: 5px;
+  background-color: #a8dab5;
+}
