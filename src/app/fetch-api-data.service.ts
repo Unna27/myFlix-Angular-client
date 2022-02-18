@@ -62,7 +62,7 @@ export class FetchAPIDataService {
   //get director details
   getDirector(name: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'directors' + name, {headers: new HttpHeaders(
+    return this.http.get(apiUrl + 'directors/' + name, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -73,10 +73,10 @@ export class FetchAPIDataService {
   //get genre details
   getGenre(name: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'movies' + name + 'genre', {headers: new HttpHeaders(
+    return this.http.get(apiUrl + 'movies/' + name + '/genre', {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
-      })}).pipe(
+      }), responseType: 'text'}).pipe(
       map(this.extractResponseData),
       catchError(this.handleError)
     );
@@ -85,7 +85,7 @@ export class FetchAPIDataService {
   //update user details
   editUser(userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.put(`${apiUrl}users/${userDetails.username}`, userDetails, {headers: new HttpHeaders(
+    return this.http.put(`${apiUrl}users/${userDetails.username}`, {"email": userDetails.email, "birthdate": userDetails.birthdate}, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -95,9 +95,10 @@ export class FetchAPIDataService {
   } 
 
   // Add a favorite Movie to the list
-  addFavoriteMovie(movieName: any,userDetails: any): Observable<any> {
+  addFavoriteMovie(movieId: any, username: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.post(apiUrl + 'users' + userDetails.name + 'movies' + movieName, {headers: new HttpHeaders(
+    console.log(token);
+    return this.http.post(`${apiUrl}users/${username}/movies/${movieId}`, movieId, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -107,9 +108,9 @@ export class FetchAPIDataService {
   }
 
   // Delete a favorite Movie from the list
-  removeFavoriteMovie(movieName: any,userDetails: any): Observable<any> {
+  removeFavoriteMovie(movieId: any, username: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.delete(apiUrl + 'users' + userDetails.name + 'movies' + movieName, {headers: new HttpHeaders(
+    return this.http.delete(`${apiUrl}users/${username}/movies/${movieId}`, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
@@ -118,27 +119,27 @@ export class FetchAPIDataService {
     );
   }
 
-  // Delete a user
+  // Delete a user. Add ressponsetype text to handle 200 status text message, as there is no JSOn returned, it goes to error handler
   deRegister(userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.delete(apiUrl + 'users' + userDetails.name , {headers: new HttpHeaders(
+    return this.http.delete(`${apiUrl}users/${userDetails.username}`, {headers: new HttpHeaders(
       {
-        Authorization: 'Bearer ' + token,
-      })}).pipe(
+        Authorization: 'Bearer ' + token
+      }), responseType: 'text' }).pipe(
       catchError(this.handleError)
     );
   }
 
   // get user data
   getUserData() : any{
-    const user = localStorage.getItem('user');
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
     return user;
   }
 
-  // get favorotemovies of user
+  // get favoritemovies of user
   getUserFavoriteMovies() : any{
     let user = JSON.parse(localStorage.getItem('user') || '{}');
-   return user.favoroteMovies;
+    return user.favoriteMovies;
   }
 
 
@@ -157,7 +158,7 @@ export class FetchAPIDataService {
         `Error body is: ${error.error}`);
     }
     return throwError(
-    'Something bad happened in userRegistration service; please try again later.');
+    'Something bad happened in FetchAPIdata service; please try again later.');
   }
 }
 

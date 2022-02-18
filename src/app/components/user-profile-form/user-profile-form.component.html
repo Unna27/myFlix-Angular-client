@@ -3,18 +3,24 @@
     <mat-card-title>My Profile View</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form>
+    <form class="container">
       <mat-form-field>
         <input matInput [(ngModel)]="user.email" type="email" placeholder="Email" name="Email" required>
       </mat-form-field>
       <mat-form-field>
         <input matInput [(ngModel)]="user.birthdate" type="date" placeholder="Birthday" name="Birthday">
       </mat-form-field>
+      <button mat-raised-button (click)="editUserDetails()" class='button-confirmation'>
+        Update
+      </button>
     </form>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button (click)="editUserDetails()" class='button-confirmation'>
-      Edit
-    </button>
-  </mat-card-actions>
+  <div>
+    <mat-card-actions>
+      <button mat-raised-button (click)="handledeRegister()" class='button-confirmation'>
+        De-register
+      </button>
+    </mat-card-actions>
+  </div>
+  <app-movie-card></app-movie-card>
 </mat-card>

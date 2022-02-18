@@ -1,1 +1,16 @@
+<mat-toolbar color="primary">
+  <h1>My Flix App</h1>
+
+  <div>
+    <nav class="navigation">
+      <a *ngIf="isAuth" routerLink="/movies" [state]="{username}">Movies</a>
+      <a routerLink="/user">{{username}} Profile</a>
+      <a *ngIf="!isAuth" routerLink="/login">Login</a>
+      <a *ngIf="!isAuth" routerLink="/register">Register</a>
+      <a routerLink="/logout">Logout</a>
+    </nav>
+  </div>
+
+</mat-toolbar>
+
 <router-outlet></router-outlet>

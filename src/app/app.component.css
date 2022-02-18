@@ -1,0 +1,15 @@
+div{
+  display: flex;
+  width: 500px;
+}
+
+.navigation{
+  position: absolute;
+  right: 0;
+}
+
+a{
+  padding-right: 1rem;
+  color:wheat;
+  text-decoration:none;
+}

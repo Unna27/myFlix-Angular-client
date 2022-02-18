@@ -10,28 +10,50 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UserProfileFormComponent implements OnInit {
   user: any = '';
+  favMovies: any[] = [];
+  movies: any[] = [];
+  favMoviesList: any[] =[];
 
   constructor(
     public fetchApiData: FetchAPIDataService,
-    public dialogRef: MatDialogRef<UserProfileFormComponent>,
+    //public dialogRef: MatDialogRef<UserProfileFormComponent>,
     public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getUserDetails();
+  
   }
 
  getUserDetails(): void {
-    this.user = JSON.parse(this.fetchApiData.getUserData());
+    this.user = this.fetchApiData.getUserData();
     console.log((this.user));
+    return this.user;
   }
 
 
+// to update user details in the db
  editUserDetails(): void {
+   console.log(this.user.birthdate);
     this.fetchApiData.editUser(this.user).subscribe((resp: any) => {
       console.log(resp);
-      localStorage.setItem('user',JSON.stringify(resp));
-      //this.user= JSON.parse(resp);
-      return this.user;
+      localStorage.setItem('user', JSON.stringify(resp));
+     // this.dialogRef.close();
+      this.snackBar.open('Profile details updated successfully', 'OK', {
+        duration: 2000
+      });
+    });
+  }
+
+
+// This is the function responsible for sending the form inputs to the backend
+handledeRegister(): void {
+  this.fetchApiData.deRegister(this.user).subscribe((result) => {
+    localStorage.clear();
+    //this.dialogRef.close(); // This will close the modal on success!
+    console.log("inside de-registration" + result);
+    this.snackBar.open('User de-registration successful', 'OK', {
+        duration: 2000
+      });
     });
   }
 }
