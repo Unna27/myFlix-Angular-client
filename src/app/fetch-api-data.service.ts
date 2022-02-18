@@ -18,17 +18,19 @@ export class FetchAPIDataService {
   constructor(private http: HttpClient) { 
     //dependency injection
   }
+
   // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
+    //console.log(userDetails);
     // apiUrl/${users}
     return this.http.post(apiUrl + 'users', userDetails).pipe(
     catchError(this.handleError)
     );
   }
+  
   // Making the api call for the user login endpoint
   public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
+    //console.log(userDetails);
     return this.http.post(apiUrl + 'login', userDetails).pipe(
       map(this.extractResponseData),
       catchError(this.handleError)
@@ -97,7 +99,6 @@ export class FetchAPIDataService {
   // Add a favorite Movie to the list
   addFavoriteMovie(movieId: any, username: string): Observable<any> {
     const token = localStorage.getItem('token');
-    console.log(token);
     return this.http.post(`${apiUrl}users/${username}/movies/${movieId}`, movieId, {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
@@ -141,7 +142,6 @@ export class FetchAPIDataService {
     let user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.favoriteMovies;
   }
-
 
   // Non-typed response extraction
   private extractResponseData(res: any): any {

@@ -20,13 +20,25 @@ import { UserLoginFormComponent } from './components/user-login-form/user-login-
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { UserProfileFormComponent } from './components/user-profile-form/user-profile-form.component';
-import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { GenreComponent } from './components/genre/genre.component';
+import { DirectorComponent } from './components/director/director.component';
+import { SynopsisComponent } from './components/synopsis/synopsis.component';
 
+let mainroute: string = "welcome";
+const user = localStorage.getItem("user");
+
+if (user) {
+ mainroute = "movies"
+} else {
+  mainroute = "welcome"
+}
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
   { path: 'user', component: UserProfileFormComponent },
-  { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
+  { path: 'logout', component: LogoutComponent },
+  { path: '', redirectTo: mainroute , pathMatch: 'prefix' },
 ];
 
 @NgModule({
@@ -37,7 +49,11 @@ const appRoutes: Routes = [
     MovieCardComponent,
     WelcomePageComponent,
     UserProfileFormComponent,
-    HomeComponent
+    
+    LogoutComponent,
+         GenreComponent,
+         DirectorComponent,
+         SynopsisComponent
   ],
   imports: [
     BrowserModule,

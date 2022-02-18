@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-title-group>
+    <mat-card-title>{{data.movieHandle.movie.title}} by {{data.movieHandle.movie.director.name}} </mat-card-title>
+    <mat-card-subtitle>Rating: {{data.movieHandle.movie.rating}} Run Time: {{data.movieHandle.movie.runtime}}
+    </mat-card-subtitle>
+    <img src={{data.movieHandle.movie.imageURL}} alt={{data.movieHandle.movie.title}} />
+  </mat-card-title-group>
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8">
+      <tr>
+        <td mat-header-row>Release Date:</td>
+        <td mat-row>{{data.movieHandle.movie.releaseDate}}</td>
+      </tr>
+      <tr>
+        <td mat-header-row>Langauge:</td>
+        <td mat-row>{{data.movieHandle.movie.language}}</td>
+      </tr>
+      <tr>
+        <td mat-header-row>Cast:</td>
+        <td mat-row>{{(data.movieHandle.movie.cast).join(', ')}}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-card-actions>
+</mat-card>

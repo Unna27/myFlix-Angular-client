@@ -3,11 +3,9 @@
 
   <div>
     <nav class="navigation">
-      <a *ngIf="isAuth" routerLink="/movies" [state]="{username}">Movies</a>
-      <a routerLink="/user">{{username}} Profile</a>
-      <a *ngIf="!isAuth" routerLink="/login">Login</a>
-      <a *ngIf="!isAuth" routerLink="/register">Register</a>
-      <a routerLink="/logout">Logout</a>
+      <a *ngIf="isAuth" routerLink="/movies">Movies</a>
+      <a *ngIf="isAuth" routerLink="/user">{{username}} Profile</a>
+      <a *ngIf="isAuth" routerLink="/logout">Logout</a>
     </nav>
   </div>
 

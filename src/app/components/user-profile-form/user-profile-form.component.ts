@@ -1,59 +1,91 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchAPIDataService } from 'src/app/fetch-api-data.service';
-import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile-form',
   templateUrl: './user-profile-form.component.html',
   styleUrls: ['./user-profile-form.component.css']
 })
+
 export class UserProfileFormComponent implements OnInit {
   user: any = '';
-  favMovies: any[] = [];
   movies: any[] = [];
-  favMoviesList: any[] =[];
+  favMoviesList: any[] = [];
 
   constructor(
     public fetchApiData: FetchAPIDataService,
-    //public dialogRef: MatDialogRef<UserProfileFormComponent>,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.getUserDetails();
-  
+    //if user undefined navigate to welcome page
+    if(window.localStorage.getItem('token') === null || window.localStorage.getItem('token')===''){
+      this.router.navigate(['welcome']);
+    }else{
+      this.getUserDetails();
+      this.getMovies();
+    }
+
   }
 
- getUserDetails(): void {
+  //get user details
+  getUserDetails(): void {
     this.user = this.fetchApiData.getUserData();
-    console.log((this.user));
-    return this.user;
+    this.user.birthdate= new Date(this.user.birthdate).toLocaleDateString('en-CA');
+    //console.log((this.user.birthdate));
+    
   }
 
-
-// to update user details in the db
- editUserDetails(): void {
-   console.log(this.user.birthdate);
-    this.fetchApiData.editUser(this.user).subscribe((resp: any) => {
-      console.log(resp);
-      localStorage.setItem('user', JSON.stringify(resp));
-     // this.dialogRef.close();
-      this.snackBar.open('Profile details updated successfully', 'OK', {
-        duration: 2000
-      });
+  // get all the movies from backend
+  getMovies(): void {
+    this.fetchApiData.getAllMovies().subscribe((resp: any) => {
+      this.movies = resp;
+      //console.log(this.movies);
+      this.getFavoriteMovies();
+      //return this.movies;
+    });
+  }
+  
+  //filter favorite movies details to a list
+  getFavoriteMovies(): void {
+    let favMovies = this.fetchApiData.getUserFavoriteMovies();
+    this.favMoviesList = this.movies.filter((movie) => {
+      return favMovies.indexOf(movie._id)>=0 ;
     });
   }
 
+// to update user details in the db
+  editUserDetails(): void {
+     this.fetchApiData.editUser(this.user).subscribe((resp: any) => {
+    //console.log(resp);
+    localStorage.setItem('user', JSON.stringify(resp));
+    this.snackBar.open('Profile details updated successfully', 'OK', {
+      duration: 2000
+    });
+  });
+}
 
-// This is the function responsible for sending the form inputs to the backend
+// remove movie from favorites list
+removefromFavorites(id: any): void {
+  this.fetchApiData.removeFavoriteMovie(id, this.user.username).subscribe((resp: any) => {
+    //console.log(resp);
+    localStorage.setItem('user',JSON.stringify(resp));
+    window.location.reload();
+  });
+}
+
+// to handle de-registration of user and send details to backend
 handledeRegister(): void {
   this.fetchApiData.deRegister(this.user).subscribe((result) => {
-    localStorage.clear();
-    //this.dialogRef.close(); // This will close the modal on success!
-    console.log("inside de-registration" + result);
+    window.localStorage.clear();
+    window.location.reload();
+    //console.log("inside de-registration" + result);
     this.snackBar.open('User de-registration successful', 'OK', {
         duration: 2000
       });
-    });
+    }); 
   }
 }

@@ -36,13 +36,15 @@ loginUser(): void {
     localStorage.setItem('token',result.token);
     localStorage.setItem('user',JSON.stringify(result.user));
     this.dialogRef.close(); // This will close the modal on success!
-    console.log("inside login"+ result);
+    //console.log("inside login"+ result);
     this.snackBar.open('User login successful', 'OK', {
       duration: 2000
     });
-    this.router.navigate(['movies']);
+    this.router.navigate(['movies']).then(()=>{
+      window.location.reload();
+    });
   }, (result) => {
-      console.log(result);
+      //console.log(result);
       this.snackBar.open(result, 'OK', {
         duration: 2000
       });

@@ -1,26 +1,52 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>My Profile View</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form class="container">
-      <mat-form-field>
-        <input matInput [(ngModel)]="user.email" type="email" placeholder="Email" name="Email" required>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput [(ngModel)]="user.birthdate" type="date" placeholder="Birthday" name="Birthday">
-      </mat-form-field>
-      <button mat-raised-button (click)="editUserDetails()" class='button-confirmation'>
-        Update
-      </button>
-    </form>
-  </mat-card-content>
-  <div>
-    <mat-card-actions>
-      <button mat-raised-button (click)="handledeRegister()" class='button-confirmation'>
-        De-register
-      </button>
-    </mat-card-actions>
+<div class="maincontainer">
+  <div class="profile">
+    <mat-card class="p_left">
+      <mat-card-header>
+        <mat-card-title>My Profile View</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="container">
+          <mat-form-field>
+            <input matInput [(ngModel)]="user.email" type="email" placeholder="Email" name="Email" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [(ngModel)]="user.birthdate" type="date" placeholder="Birthday" name="Birthday">
+          </mat-form-field>
+          <button title="edit details and click Update to save changes" mat-raised-button (click)="editUserDetails()"
+            class='button-confirmation' color="primary">
+            Update
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <div class="p_right">
+      <mat-card-actions>
+        <button title="click to unsubscribe" mat-stroked-button (click)="handledeRegister()" class='button-confirmation'
+          color="accent">
+          De-register
+        </button>
+      </mat-card-actions>
+    </div>
   </div>
-  <app-movie-card></app-movie-card>
-</mat-card>
+  <!-- display favorite movies-->
+  <h1>My Favorite Movies</h1>
+  <div class="favMoviesContainer">
+    <mat-card class="favMoviesCard" *ngFor="let movieHandle of favMoviesList;">
+      <mat-card-title-group>
+        <mat-card-title>{{movieHandle.title}}</mat-card-title>
+        <mat-card-subtitle>Rating: {{movieHandle.rating}} Run Time: {{movieHandle.runtime}}
+        </mat-card-subtitle>
+        <img src={{movieHandle.imageURL}} alt={{movieHandle.title}} />
+      </mat-card-title-group>
+      <mat-card-content>
+        <p>{{movieHandle.description}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button title="Remove from favorites list" (click)="removefromFavorites(movieHandle._id)">
+          <mat-icon id="favorite">favorite_border
+          </mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

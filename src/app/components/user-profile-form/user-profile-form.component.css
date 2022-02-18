@@ -1,3 +1,22 @@
+.maincontainer {
+  background-color:  #F6F3EE;
+}
+
+.profile{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.p_left {
+ flex-basis: 60%;
+}
+
+.p_right{
+  flex-basis: 40%;
+  text-align: right;
+}
+
 .container {
   margin-left: 8px;
 }
@@ -17,5 +36,25 @@
 
 div {
   margin:10px;
+}
+
+h1{
+  text-align: center;
+}
+
+.favMoviesContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+
+.favMoviesCard {
+  flex-basis: 300px;
+}
+
+#favorite {
+  color: red;
 }
 

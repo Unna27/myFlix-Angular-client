@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{data.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table class="mat-elevation-z8">
+      <tr>
+        <td mat-header-row>Bio:</td>
+        <td mat-row>{{data.director.bio}}</td>
+      </tr>
+      <tr>
+        <td mat-header-row>BirthDate:</td>
+        <td mat-row>{{data.director.birthDate}}</td>
+      </tr>
+      <tr *ngIf="data.director.deathDate!==null">
+        <td mat-header-row>DeathDate:</td>
+        <td mat-row>{{data.director.deathDate}}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-card-actions>
+</mat-card>
