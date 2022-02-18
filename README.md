@@ -57,11 +57,11 @@ Profile view
 ## Screenshots
 Home Page:
 
+![Movies](https://user-images.githubusercontent.com/58221568/154762398-0e587386-02a2-4c17-bbef-a850189183bf.png)
 
 Profile View:
 
-
-
+![Profile](https://user-images.githubusercontent.com/58221568/154762407-de9236bc-aa75-46a3-be39-4b47165adf65.png)
 
 ## Setup
 
