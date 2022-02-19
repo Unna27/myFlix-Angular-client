@@ -20,6 +20,7 @@ export class UserProfileFormComponent implements OnInit {
     public snackBar: MatSnackBar,
     private router: Router) { }
 
+  /** On initialization, checks if user details are present in localStorage. If present, collects user and movie details, else navigates to welcome page */
   ngOnInit(): void {
     //if user undefined navigate to welcome page
     if(window.localStorage.getItem('token') === null || window.localStorage.getItem('token')===''){
@@ -49,7 +50,7 @@ export class UserProfileFormComponent implements OnInit {
     });
   }
   
-  //filter favorite movies details to a list
+  /** filter favorite movies details to a list */
   getFavoriteMovies(): void {
     let favMovies = this.fetchApiData.getUserFavoriteMovies();
     this.favMoviesList = this.movies.filter((movie) => {
@@ -57,7 +58,7 @@ export class UserProfileFormComponent implements OnInit {
     });
   }
 
-// to update user details in the db
+  /** to update user details in the api, calls the respective fetchi api data service function */
   editUserDetails(): void {
      this.fetchApiData.editUser(this.user).subscribe((resp: any) => {
     //console.log(resp);
@@ -68,7 +69,7 @@ export class UserProfileFormComponent implements OnInit {
   });
 }
 
-// remove movie from favorites list
+/** calls fetch-api data service function to remove movie from favorites list */ 
 removefromFavorites(id: any): void {
   this.fetchApiData.removeFavoriteMovie(id, this.user.username).subscribe((resp: any) => {
     //console.log(resp);
@@ -77,7 +78,7 @@ removefromFavorites(id: any): void {
   });
 }
 
-// to handle de-registration of user and send details to backend
+/** calls fetch-api data service function to handle de-registration of user and clears local storage upon success */
 handledeRegister(): void {
   this.fetchApiData.deRegister(this.user).subscribe((result) => {
     window.localStorage.clear();

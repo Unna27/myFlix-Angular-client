@@ -29,7 +29,10 @@ constructor(
 ngOnInit(): void {
 }
 
-// This is the function responsible for sending the form inputs to the backend
+/** 
+   * function that gets trigerred when Login is clicked from welcome page
+   * allows user to login by validating with api and stores token and user details in local storage
+*/
 loginUser(): void {
   this.fetchApiData.userLogin(this.userData).subscribe((result) => {
     // Store token and user data in localstorage

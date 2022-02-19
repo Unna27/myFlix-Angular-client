@@ -29,10 +29,12 @@ constructor(
 ngOnInit(): void {
 }
 
-// handle registration of user and connect to backend
+/** 
+   * function that gets trigerred when Sign up is clicked from welcome page
+   * registers user details by making api call
+*/
 registerUser(): void {
   this.fetchApiData.userRegistration(this.userData).subscribe((result) => {
-    // Logic for a successful user registration goes here! (To be implemented)
     this.dialogRef.close(); // This will close the modal on success!
     //console.log("inside registration" + result);
     this.snackBar.open('User registration successful. Login to continue.', 'OK', {

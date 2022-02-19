@@ -28,5 +28,16 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "typedocOptions": {
+        "entryPoints": ["src/main.ts",
+          "src/app/app.component.ts",
+          "src/app/fetch-api-data.service.ts",
+          "src/app/components/user-registration-form/user-registration-form.component.ts",
+          "src/app/components/user-login-form/user-login-form.component.ts",
+          "src/app/components/movie-card/movie-card.component.ts",
+          "src/app/components/user-profile-form/user-profile-form.component.ts"
+        ],
+        "out": "docs"
+    }
 }

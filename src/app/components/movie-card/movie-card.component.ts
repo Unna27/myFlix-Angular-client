@@ -22,7 +22,9 @@ export class MovieCardComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  // similar to componentdidmount
+/** 
+   * on Initialization, gets all movies details from api
+*/
   ngOnInit(): void {
    this.getMovies();
    
@@ -38,7 +40,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
  
- // create a movies list array with isFavorite var for styling
+/** 
+   * generates a new movies list array with a new property isFavorite: boolean added
+   * to toggle the favorite icon to set/remove the movie from favorites list
+*/
   getFavoriteMovies(): void {
     let favMovies = this.fetchApiData.getUserFavoriteMovies();
     
@@ -49,7 +54,7 @@ export class MovieCardComponent implements OnInit {
     //console.log("final"+this.finalMoviesList);
   }
 
-  // get genre details from backend open genre dialog
+  /** get genre details from backend and opens genre dialog to display details */
   getGenreDetails<String>(name: string): void {
     this.fetchApiData.getGenre(name).subscribe((resp: any) => {
     //console.log(resp);
@@ -61,7 +66,7 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  //get director details from backend and open director dialog
+  /** get director details from backend and open director dialog */
   getDirectorDetails<String>(name: string): void {
     this.fetchApiData.getDirector(name).subscribe((resp: any) => {
       //console.log(resp);
@@ -74,7 +79,7 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  // open synopsis dialog to display single movie details
+  /** open synopsis dialog to display single movie details */
   getSynopsis<String>(movieHandle: any): void {
    this.dialog.open(SynopsisComponent,{
         width: '600px',
@@ -82,7 +87,7 @@ export class MovieCardComponent implements OnInit {
       });
   }
 
-  // connect to backend to add selected movie to favorites list
+  /** connect to backend to add selected movie to favorites list */
   addtoFavorites(id: any): void {
     let user = this.fetchApiData.getUserData();
     //console.log(user.username);
@@ -92,7 +97,7 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  // connect to backend to remove selected movie from favorites list
+  /** connect to backend to remove selected movie from favorites list */
   removefromFavorites(id: any): void {
     let user = this.fetchApiData.getUserData();
     //console.log(user.username);
@@ -102,7 +107,7 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  //handle toggle event from favorite icon to add/remove movie from favorite list
+  /** handle toggle event from favorite icon to add/remove movie from favorite list */
   toggleButton(movieHandle:any) {
     !movieHandle.isFavorite ? this.addtoFavorites(movieHandle.movie._id) : this.removefromFavorites(movieHandle.movie._id);
     movieHandle.isFavorite = !movieHandle.isFavorite;
